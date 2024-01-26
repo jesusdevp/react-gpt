@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { GptMessage, MyMessage, TextMessageBox, TypingLoader } from "../../components"
-import { ProsConsResponse } from "../../../interfaces";
-import { prosConsStreamUseCase } from "../../../core/use-cases/pros-cons-stream.use-case";
+import { prosConsStreamGeneratorUseCase } from "../../../core/use-cases/pros-cons-stream-generator.use-case";
 
 
 interface Message {
@@ -19,13 +18,46 @@ export const ProsConsStreamPage = () => {
     setIsLoading(true)
     setMessages((prev) => [...prev, { text: text, isGpt: false }])
 
-    await prosConsStreamUseCase( text ) 
-
-    // if( !ok ) return;
-
-    // setMessages((prev) => [...prev, { text: content, isGpt: true }])
-
+    const stream = await prosConsStreamGeneratorUseCase(text)
     setIsLoading(false)
+
+    setMessages((prev) => [...prev, { text: '', isGpt: true }])
+
+    for await (const text of stream) {
+      setMessages(( messages ) => {
+        const newMessages = [...messages];
+        newMessages[ newMessages.length - 1 ].text = text;
+
+        return newMessages;
+      })
+    }
+
+    // const reader = await prosConsStreamUseCase( text )
+    // setIsLoading(false)
+
+    // if( !reader ) return;
+
+    // const decoder = new TextDecoder();
+    // let message = ''
+    // setMessages((messages) => [...messages, { text: message, isGpt: true }])
+
+    // while(true) {
+    //   const { value, done } = await reader.read();
+
+    //   if( done ) break;
+
+    //   const decodedChunk = decoder.decode(value, { stream: true })
+    //   message += decodedChunk;
+
+      // setMessages(( messages ) => {
+      //   const newMessages = [...messages];
+      //   newMessages[ newMessages.length - 1 ].text = message;
+
+      //   return newMessages;
+      // })
+
+
+
   }
 
   return (

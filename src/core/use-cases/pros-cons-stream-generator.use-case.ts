@@ -1,7 +1,7 @@
 
 
 
-export const prosConsStreamUseCase = async ( prompt: string ) => {
+export async function* prosConsStreamGeneratorUseCase ( prompt: string ) {
 
     try {
         
@@ -23,24 +23,23 @@ export const prosConsStreamUseCase = async ( prompt: string ) => {
             return null;
         }
 
-        return reader;
 
-        // const decoder = new TextDecoder();
+        const decoder = new TextDecoder();
 
-        // let text = '';
+        let text = '';
 
-        // while (true) {
-        //     const { value, done } = await reader.read();
+        while (true) {
+            const { value, done } = await reader.read();
 
-        //     if ( done ) {
-        //         break;
-        //     }
+            if ( done ) {
+                break;
+            }
 
-        //     const decodeChunk = decoder.decode(value, { stream: true })
+            const decodeChunk = decoder.decode(value, { stream: true })
 
-        //     text += decodeChunk
-        //     console.log(text)
-        // }
+            text += decodeChunk
+            yield text;
+        }
 
 
     } catch (error) {
