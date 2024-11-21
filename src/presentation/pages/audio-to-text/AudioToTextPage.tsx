@@ -28,11 +28,11 @@ export const AudioToTextPage = () => {
     if ( !resp ) return;
 
     const gptMessage = `
-## Transcripcion:
-__Duracion:__ ${ Math.round( resp.duration ) } segundos
-### El texto es:
-${ resp.text }
-`
+      ## Transcripcion:
+      __Duracion:__ ${ Math.round( resp.duration ) } segundos
+      ### El texto es:
+      ${ resp.text }
+      `
 
     setMessages(prev => [
       ...prev,
@@ -58,7 +58,7 @@ ${ resp.text }
     <div className="chat-container" >
       <div className="chat-messages">
         <div className="grid grid-cols-12 gap-y-2" >
-          <GptMessage text="Hola, que audio quieres generar hoy?" />
+          <GptMessage text="Hola, que transcripcion quieres generar hoy?" />
 
           {
             messages.map((message, i) => (
