@@ -1,6 +1,7 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { OrthographyPage, ProsConsPage, ProsConsStreamPage, TranslatePage, TextToAudioPage, ImageGenerationPage, ImageTunningPage, AudioToTextPage, AssistantPage } from "../pages";
 import { DashboardLayout } from "../layouts/DashboardLayout";
+import { ImageToTextPage } from "../pages/image-to-text/ImageToTextPage";
 
 
 export const menuRoutes = [
@@ -66,6 +67,13 @@ export const menuRoutes = [
       title: "Asistente",
       description: "Información del asistente",
       component: <AssistantPage />
+    },
+    {
+      to: "/image-to-text",
+      icon: "fa-solid fa-images",
+      title: "Imagen a texto",
+      description: "Convierte imagen a texto",
+      component: <ImageToTextPage />
     },
   ];
 

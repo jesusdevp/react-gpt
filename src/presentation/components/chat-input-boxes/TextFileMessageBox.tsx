@@ -68,7 +68,11 @@ export const TextFileMessageBox = ({ onSendMessage, placeholder, disabledCorrect
         <div className="ml-4" >
             <button 
                 className="btn-primary"
-                disabled={ !selectedFile }
+                disabled={
+                        !selectedFile ||
+                        !inputFileRef?.current || 
+                        message.length === 0
+                }
             >
                 {
                     ( !selectedFile )
